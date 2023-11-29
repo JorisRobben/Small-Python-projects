@@ -46,9 +46,9 @@ def draw_card(card_deck):
     
 def paint_card(symbol, sym):
     print(" ___ ")
-    print(f"|{sym}  |")
+    print("|"+f"{sym}".ljust(3)+"|")
     print(f"| {symbol} |")
-    print(f"|__{sym}|")
+    print("|"+f"{sym}".rjust(3,"_")+"|")
 
 def main():
   balance = 0
@@ -176,4 +176,3 @@ def main():
     else:
         print("It's a tie. Your balance is still ${balance}.")
 main()
-     
