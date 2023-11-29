@@ -13,7 +13,7 @@ def generate_card_deck():
     card_deck.append(i)
   return card_deck
 
-def draw_card(card_deck):
+def draw_card(card_deck, points):
   card = int(random.choice(card_deck))
   if card in range(1,14):
     symbol = HEARTS
@@ -42,7 +42,8 @@ def draw_card(card_deck):
     value = 11
     sym = "A"
   card_deck.remove(card)
-  return (symbol, sym, value)
+  points = points + value
+  return (symbol, sym, points)
     
 def paint_card(symbol, sym):
     print(" ___ ")
@@ -80,12 +81,12 @@ def main():
         time.sleep(1)
         print ("The dealer is drawing cards...")
         time.sleep(1)
-        dealer_hand[1] = draw_card(card_deck)
-        dealer_points = dealer_points + dealer_hand[1][2]
-        player_hand[1] = draw_card(card_deck)
-        player_points = player_points + player_hand[1][2]
-        player_hand[2] = draw_card(card_deck)
-        player_points = player_points + player_hand[2][2]
+        dealer_hand[1] = draw_card(card_deck, dealer_points)
+        dealer_points = dealer_hand[1][2]
+        player_hand[1] = draw_card(card_deck, player_points)
+        player_points = player_hand[1][2]
+        player_hand[2] = draw_card(card_deck, player_points)
+        player_points = player_hand[2][2]
         print("Dealer:")
         paint_card(dealer_hand[1][0], dealer_hand[1][1])
         time.sleep(1)
@@ -97,7 +98,7 @@ def main():
         while True:
           next_move = input("What is your next move? D to draw, S to stop!\n>>> ")
           if next_move == "D":
-            player_hand[3] = draw_card(card_deck)
+            player_hand[3] = draw_card(card_deck, player_points)
             player_points = player_points + player_hand[3][2]
             paint_card(dealer_hand[1][0], dealer_hand[1][1])
             time.sleep(1)
@@ -113,3 +114,5 @@ def main():
         print("Please make a valid bet.")
         continue
 main()
+    
+    
