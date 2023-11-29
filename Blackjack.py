@@ -9,25 +9,25 @@ POSSIBLE_SYMBOLS = [HEARTS, DIAMONDS, SPADES, CLUBS]
 
 def generate_card_deck():
   card_deck = []
-  for i in range(1,53):
+  for i in range(2,54):
     card_deck.append(i)
   return card_deck
 
 def draw_card(card_deck, points):
   card = int(random.choice(card_deck))
-  if card in range(1,14):
+  if card in range(2,15):
     symbol = HEARTS
     value = card
-  elif card in range(14,27):
+  elif card in range(15,28):
     symbol = DIAMONDS
     value = card - 13
-  elif card in range(27,40):
+  elif card in range(28,41):
     symbol = SPADES
     value = card - 26
-  elif card in range(40,53):
+  elif card in range(41,54):
     symbol = CLUBS
     value = card - 39
-  if value in range(1,11):
+  if value in range(2,11):
     sym = value
   elif value == 11:
     value = 10
@@ -53,11 +53,6 @@ def paint_card(symbol, sym):
 
 def main():
   balance = 0
-  card_deck = generate_card_deck()
-  dealer_points = 0
-  dealer_hand = {}
-  player_points = 0
-  player_hand = {}
   while True:
     player_move = input("Welcome to the Blackjack table! What do you want to do? Press D to make a deposit, P to play, or Q to quit!\n>>> ")
     if player_move not in ("D", "P", "Q"):
@@ -84,6 +79,11 @@ def main():
         else:
           #Loop voor het trekken van de eerste kaarten
           #1 voor dealer, 2 voor speler
+          card_deck = generate_card_deck()
+          dealer_points = 0
+          dealer_hand = {}
+          player_points = 0
+          player_hand = {}
           time.sleep(1)
           print ("The dealer is drawing cards...")
           time.sleep(1)
@@ -104,7 +104,10 @@ def main():
           while True:
             #Loop voor het verder spelen
             next_move = input("What is your next move? D to draw, S to stop!\n>>> ")
-            if next_move == "D":
+            if next_move not in ("D", "S"):
+              print("Please enter a valid move!")
+              continue
+            elif next_move == "D":
               player_hand[3] = draw_card(card_deck, player_points)
               player_points = player_hand[3][2]
               paint_card(player_hand[3][0], player_hand[3][1])
@@ -119,5 +122,7 @@ def main():
               else:
                 print(f"\nYou have {player_points} points... What is your next move? D to draw, S to stop!\n>>> ")
                 continue
-              continue
-main()    
+            elif next_move == "S":
+              print(f"\nYou have {player_points} points... Now let's see what the dealer gets!")
+              break
+main()
