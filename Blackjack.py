@@ -152,7 +152,7 @@ def main():
                 time.sleep(1)
                 if dealer_points < 17:
                     continue
-                elif 17 >= dealer_points >= 21:
+                elif 17 <= dealer_points <= 21:
                     print(f"The dealer has {dealer_points} points, and will stop!")
                     if player_points > dealer_points:
                         player_wins = True
@@ -165,7 +165,7 @@ def main():
                     player_wins = True
                     print(f"The dealer has {dealer_points} points!")
                     break
-              break
+            break  
         break
     if player_wins == True:
         balance = balance + int(bet)
@@ -176,3 +176,4 @@ def main():
     else:
         print("It's a tie. Your balance is still ${balance}.")
 main()
+     
