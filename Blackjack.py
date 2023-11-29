@@ -80,19 +80,28 @@ def main():
           #Loop voor het trekken van de eerste kaarten
           #1 voor dealer, 2 voor speler
           card_deck = generate_card_deck()
+          dealer_cards = 0
           dealer_points = 0
           dealer_hand = {}
+          player_cards = 0
           player_points = 0
           player_hand = {}
           time.sleep(1)
           print ("The dealer is drawing cards...")
           time.sleep(1)
-          dealer_hand[1] = draw_card(card_deck)
+          #dealer draws its first card
+          dealer_cards += 1
+          dealer_hand[dealer_cards] = draw_card(card_deck)
           dealer_points += dealer_hand[1][2]
-          player_hand[1] = draw_card(card_deck)
-          player_points += player_hand[1][2]
-          player_hand[2] = draw_card(card_deck)
-          player_points += player_hand[2][2]
+          #player draws its first card
+          player_cards += 1
+          player_hand[player_cards] = draw_card(card_deck)
+          player_points += player_hand[player_cards][2]
+          #player draws its second card
+          player_cards += 1
+          player_hand[player_cards] = draw_card(card_deck)
+          player_points += player_hand[player_cards][2]
+          #print and paint everything
           print("Dealer:")
           paint_card(dealer_hand[1][0], dealer_hand[1][1])
           time.sleep(1)
@@ -101,6 +110,7 @@ def main():
           time.sleep(1)
           paint_card(player_hand[2][0], player_hand[2][1])
           print(f"\nThe dealer has {dealer_points} points, and you have {player_points} points.")
+          #next move for the player
           next_move = input("What is your next move? D to draw, S to stop!\n>>> ")
           while True:
             #Loop voor het verder spelen
@@ -111,9 +121,10 @@ def main():
               time.sleep(1)
               print("Taking another card...")
               time.sleep(1)
-              player_hand[3] = draw_card(card_deck)
-              player_points += player_hand[3][2]
-              paint_card(player_hand[3][0], player_hand[3][1])
+              player_cards +=1
+              player_hand[player_cards] = draw_card(card_deck)
+              player_points += player_hand[player_cards][2]
+              paint_card(player_hand[player_cards][0], player_hand[player_cards][1])
               if player_points > 21:
                 balance = balance - int(bet)
                 print(f"\nYou have {player_points} points... You've lost your bet!\nYour balance is now ${balance}.")
@@ -129,12 +140,14 @@ def main():
             elif next_move == "S":
               print(f"\nYou have {player_points} points... Now let's see what the dealer gets!")
               while True:
-                dealer_hand[2] = draw_card(card_deck)
-                dealer_points += dealer_hand[2][2]
+                #loop for the dealer to draw cards until he reaches 17 or more, or goes above 21
+                dealer_cards += 1
+                dealer_hand[dealer_cards] = draw_card(card_deck)
+                dealer_points += dealer_hand[dealer_cards][2]
                 time.sleep(1)
                 print("Taking another card...")
                 time.sleep(1)
-                paint_card(dealer_hand[2][0], dealer_hand[2][1])
+                paint_card(dealer_hand[dealer_cards][0], dealer_hand[dealer_cards][1])
                 print(f"The dealer has {dealer_points} points!")
                 if dealer_points < 17:
                     print("The dealer will take another card!")
@@ -147,5 +160,3 @@ def main():
                     break
         break
 main()
-    
-    
