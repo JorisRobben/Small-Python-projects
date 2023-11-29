@@ -109,6 +109,7 @@ def main():
           paint_card(player_hand[1][0], player_hand[1][1])
           time.sleep(1)
           paint_card(player_hand[2][0], player_hand[2][1])
+          time.sleep(1)
           print(f"\nThe dealer has {dealer_points} points, and you have {player_points} points.")
           #next move for the player
           next_move = input("What is your next move? D to draw, S to stop!\n>>> ")
@@ -125,13 +126,12 @@ def main():
               player_hand[player_cards] = draw_card(card_deck)
               player_points += player_hand[player_cards][2]
               paint_card(player_hand[player_cards][0], player_hand[player_cards][1])
+              time.sleep(1)
               if player_points > 21:
-                balance = balance - int(bet)
+                print(f"\nYou have {player_points} points...")  
                 player_wins = False
-                print(f"\nYou have {player_points} points... You've lost your bet!\nYour balance is now ${balance}.")
                 break
               elif player_points == 21:
-                balance = balance + int(bet)
                 print(f"\nYou have {player_points} points...\nThat's perfect!")
                 next_move = "S"
                 continue
@@ -148,11 +148,11 @@ def main():
                 dealer_hand[dealer_cards] = draw_card(card_deck)
                 dealer_points += dealer_hand[dealer_cards][2]
                 time.sleep(1)
-                time.sleep(1)
                 paint_card(dealer_hand[dealer_cards][0], dealer_hand[dealer_cards][1])
+                time.sleep(1)
                 if dealer_points < 17:
                     continue
-                elif 17 > dealer_points >= 21:
+                elif 17 >= dealer_points >= 21:
                     print(f"The dealer has {dealer_points} points, and will stop!")
                     if player_points > dealer_points:
                         player_wins = True
