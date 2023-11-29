@@ -26,27 +26,28 @@ def draw_card(card_deck):
   elif card in range(40,53):
     symbol = CLUBS
     value = card - 39
+  if value in range(1,11):
+    sym = value
+  elif value == 11:
+    value = 10
+    sym = "J"
+  elif value == 12:
+    value = 10
+    sym = "Q"
+  elif value == 13:
+    value = 10
+    sym = "K"
+  elif value == 14:
+    value = 11
+    sym = "A"
   card_deck.remove(card)
-  return (symbol, value)
+  return (symbol, sym, value)
     
-def paint_card(symbol, value):
-  if symbol in POSSIBLE_SYMBOLS and value in range (1,14):
-    if value == 1:
-      sym = "A"
-    elif value in range(2,11):
-      sym = str(value)
-    elif value == 11:
-      sym = "J"
-    elif value == 12:
-     sym = "Q"
-    elif value == 13:
-     sym = "K"
+def paint_card(symbol, sym):
     print(" ___ ")
     print(f"|{sym}  |")
     print(f"| {symbol} |")
     print(f"|__{sym}|")
-  else:
-    print("Please enter a valid card")
 
 def main():
   balance = 0
@@ -76,16 +77,19 @@ def main():
         player_points = 0
         player_hand = {}
         dealer_hand[1] = draw_card(card_deck)
+        dealer_points = dealer_points + dealer_hand[1][2]
         player_hand[1] = draw_card(card_deck)
+        player_points = player_points + player_hand[1][2]
         player_hand[2] = draw_card(card_deck)
+        player_points = player_points + player_hand[2][2]
         print("Dealer:")
         paint_card(dealer_hand[1][0], dealer_hand[1][1])
         print("You:")
         paint_card(player_hand[1][0], player_hand[1][1])
         paint_card(player_hand[2][0], player_hand[2][1])
+        print(f"\nThe dealer has {dealer_points} points, and you have {player_points} points. What is your next move?")
       else:
         print("Please make a valid bet.")
         continue
 main()
-    
     
