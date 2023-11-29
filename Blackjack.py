@@ -113,7 +113,7 @@ def main():
           #next move for the player
           next_move = input("What is your next move? D to draw, S to stop!\n>>> ")
           while True:
-            #Loop voor het verder spelen
+            #loop where the player can continue or stop playing
             if next_move not in ("D", "S"):
               next_move = input("Please enter a valid move! D to draw, S to stop!\n>>>")
               continue
@@ -127,6 +127,7 @@ def main():
               paint_card(player_hand[player_cards][0], player_hand[player_cards][1])
               if player_points > 21:
                 balance = balance - int(bet)
+                player_wins = False
                 print(f"\nYou have {player_points} points... You've lost your bet!\nYour balance is now ${balance}.")
                 break
               elif player_points == 21:
@@ -148,15 +149,32 @@ def main():
                 print("Taking another card...")
                 time.sleep(1)
                 paint_card(dealer_hand[dealer_cards][0], dealer_hand[dealer_cards][1])
-                print(f"The dealer has {dealer_points} points!")
                 if dealer_points < 17:
                     print("The dealer will take another card!")
                     continue
                 elif 17 > dealer_points >= 21:
-                    print(f"The dealer will stop at {dealer_points} points!")
+                    print(f"The dealer has {dealer_points} points, and will stop!")
+                    if player_points > dealer_points:
+                        player_wins = True
+                    elif player_points == dealer_points:
+                        player_wins = None
+                    else:
+                        player_wins = False
                     break
                 elif dealer_points > 21:
-                    print(f"The dealer has {dealer_points} points. He loses!")
+                    player_wins = True
+                    print(f"The dealer has {dealer_points} points!")
                     break
+              break
         break
+    if player_wins == True:
+        balance = balance + int(bet)
+        print(f"You win! You've won ${bet}.\nYour balance is ${balance}.")
+    elif player_wins == False:
+        balance = balance - int(bet)
+        print(f"You lose! You've lost ${bet}.\nYour balance is ${balance}.")
+    else:
+        print("It's a tie. Your balance is still ${balance}.")
 main()
+     
+    
