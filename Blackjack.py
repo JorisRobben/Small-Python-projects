@@ -101,11 +101,11 @@ def main():
           time.sleep(1)
           paint_card(player_hand[2][0], player_hand[2][1])
           print(f"\nThe dealer has {dealer_points} points, and you have {player_points} points.")
+          next_move = input("What is your next move? D to draw, S to stop!\n>>> ")
           while True:
             #Loop voor het verder spelen
-            next_move = input("What is your next move? D to draw, S to stop!\n>>> ")
             if next_move not in ("D", "S"):
-              print("Please enter a valid move!")
+              next_move = input("Please enter a valid move! D to draw, S to stop!\n>>>")
               continue
             elif next_move == "D":
               time.sleep(1)
@@ -124,7 +124,7 @@ def main():
                 next_move = "S"
                 continue
               else:
-                print(f"\nYou have {player_points} points...")
+                next_move = input(f"\nYou have {player_points} points...\nWhat's your next move? Do to draw, S to stop!\n>>>")
                 continue
             elif next_move == "S":
               print(f"\nYou have {player_points} points... Now let's see what the dealer gets!")
@@ -147,3 +147,5 @@ def main():
                     break
         break
 main()
+    
+    
