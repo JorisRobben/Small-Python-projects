@@ -142,15 +142,15 @@ def main():
               print(f"\nYou have {player_points} points... Now let's see what the dealer gets!")
               while True:
                 #loop for the dealer to draw cards until he reaches 17 or more, or goes above 21
+                time.sleep(1)
+                print(f"The dealer has {dealer_points} points\nTaking another card...")
                 dealer_cards += 1
                 dealer_hand[dealer_cards] = draw_card(card_deck)
                 dealer_points += dealer_hand[dealer_cards][2]
                 time.sleep(1)
-                print("Taking another card...")
                 time.sleep(1)
                 paint_card(dealer_hand[dealer_cards][0], dealer_hand[dealer_cards][1])
                 if dealer_points < 17:
-                    print("The dealer will take another card!")
                     continue
                 elif 17 > dealer_points >= 21:
                     print(f"The dealer has {dealer_points} points, and will stop!")
@@ -176,5 +176,3 @@ def main():
     else:
         print("It's a tie. Your balance is still ${balance}.")
 main()
-     
-    
