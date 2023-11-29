@@ -1,4 +1,5 @@
 import random
+import time
 
 HEARTS   = chr(9829) # Character 9829 is '♥'.
 DIAMONDS = chr(9830) # Character 9830 is '♦'.
@@ -51,6 +52,11 @@ def paint_card(symbol, sym):
 
 def main():
   balance = 0
+  card_deck = generate_card_deck()
+  dealer_points = 0
+  dealer_hand = {}
+  player_points = 0
+  player_hand = {}
   while True:
     player_move = input("Welcome to the Blackjack table! What do you want to do? Press D to make a deposit, P to play, or Q to quit!\n>>> ")
     if player_move not in ("D", "P", "Q"):
@@ -71,11 +77,9 @@ def main():
     elif player_move == "P":
       bet = input(f"How much would you like to bet (max. ${balance})?\n>>> ")
       if bet.isnumeric() and 0 < int(bet) <= balance:
-        card_deck = generate_card_deck()
-        dealer_points = 0
-        dealer_hand = {}
-        player_points = 0
-        player_hand = {}
+        time.sleep(1)
+        print ("The dealer is drawing cards...")
+        time.sleep(1)
         dealer_hand[1] = draw_card(card_deck)
         dealer_points = dealer_points + dealer_hand[1][2]
         player_hand[1] = draw_card(card_deck)
@@ -84,12 +88,28 @@ def main():
         player_points = player_points + player_hand[2][2]
         print("Dealer:")
         paint_card(dealer_hand[1][0], dealer_hand[1][1])
+        time.sleep(1)
         print("You:")
         paint_card(player_hand[1][0], player_hand[1][1])
+        time.sleep(1)
         paint_card(player_hand[2][0], player_hand[2][1])
-        print(f"\nThe dealer has {dealer_points} points, and you have {player_points} points. What is your next move?")
+        print(f"\nThe dealer has {dealer_points} points, and you have {player_points} points.")
+        while True:
+          next_move = input("What is your next move? D to draw, S to stop!\n>>> ")
+          if next_move == "D":
+            player_hand[3] = draw_card(card_deck)
+            player_points = player_points + player_hand[3][2]
+            paint_card(dealer_hand[1][0], dealer_hand[1][1])
+            time.sleep(1)
+            print("You:")
+            paint_card(player_hand[1][0], player_hand[1][1])
+            paint_card(player_hand[2][0], player_hand[2][1])
+            print("The dealer is drawing cards...")
+            time.sleep(1)
+            paint_card(player_hand[3][0], player_hand[3][1])
+            print(f"\nThe dealer has {dealer_points} points, and you have {player_points} points.")
+            continue
       else:
         print("Please make a valid bet.")
         continue
 main()
-    
