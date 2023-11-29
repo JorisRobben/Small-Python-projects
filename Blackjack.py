@@ -76,43 +76,48 @@ def main():
         print("Please make a valid deposit.")
         continue
     elif player_move == "P":
-      bet = input(f"How much would you like to bet (max. ${balance})?\n>>> ")
-      if bet.isnumeric() and 0 < int(bet) <= balance:
-        time.sleep(1)
-        print ("The dealer is drawing cards...")
-        time.sleep(1)
-        dealer_hand[1] = draw_card(card_deck, dealer_points)
-        dealer_points = dealer_hand[1][2]
-        player_hand[1] = draw_card(card_deck, player_points)
-        player_points = player_hand[1][2]
-        player_hand[2] = draw_card(card_deck, player_points)
-        player_points = player_hand[2][2]
-        print("Dealer:")
-        paint_card(dealer_hand[1][0], dealer_hand[1][1])
-        time.sleep(1)
-        print("You:")
-        paint_card(player_hand[1][0], player_hand[1][1])
-        time.sleep(1)
-        paint_card(player_hand[2][0], player_hand[2][1])
-        print(f"\nThe dealer has {dealer_points} points, and you have {player_points} points.")
-        while True:
-          next_move = input("What is your next move? D to draw, S to stop!\n>>> ")
-          if next_move == "D":
-            player_hand[3] = draw_card(card_deck, player_points)
-            player_points = player_points + player_hand[3][2]
-            paint_card(dealer_hand[1][0], dealer_hand[1][1])
-            time.sleep(1)
-            print("You:")
-            paint_card(player_hand[1][0], player_hand[1][1])
-            paint_card(player_hand[2][0], player_hand[2][1])
-            print("The dealer is drawing cards...")
-            time.sleep(1)
-            paint_card(player_hand[3][0], player_hand[3][1])
-            print(f"\nThe dealer has {dealer_points} points, and you have {player_points} points.")
-            continue
-      else:
-        print("Please make a valid bet.")
-        continue
-main()
-    
-    
+      while True:
+        bet = input(f"How much would you like to bet (max. ${balance})?\n>>> ")
+        if not bet.isnumeric() or not 0 < int(bet) <= balance:
+          print("Please make a valid bet.")
+          continue
+        else:
+          #Loop voor het trekken van de eerste kaarten
+          #1 voor dealer, 2 voor speler
+          time.sleep(1)
+          print ("The dealer is drawing cards...")
+          time.sleep(1)
+          dealer_hand[1] = draw_card(card_deck, dealer_points)
+          dealer_points = dealer_hand[1][2]
+          player_hand[1] = draw_card(card_deck, player_points)
+          player_points = player_hand[1][2]
+          player_hand[2] = draw_card(card_deck, player_points)
+          player_points = player_hand[2][2]
+          print("Dealer:")
+          paint_card(dealer_hand[1][0], dealer_hand[1][1])
+          time.sleep(1)
+          print("You:")
+          paint_card(player_hand[1][0], player_hand[1][1])
+          time.sleep(1)
+          paint_card(player_hand[2][0], player_hand[2][1])
+          print(f"\nThe dealer has {dealer_points} points, and you have {player_points} points.")
+          while True:
+            #Loop voor het verder spelen
+            next_move = input("What is your next move? D to draw, S to stop!\n>>> ")
+            if next_move == "D":
+              player_hand[3] = draw_card(card_deck, player_points)
+              player_points = player_hand[3][2]
+              paint_card(player_hand[3][0], player_hand[3][1])
+              if player_points > 21:
+                balance = balance - int(bet)
+                print(f"\nYou have {player_points} points... You've lost your bet! Your balance is now ${balance}.")
+                break
+              elif player_points == 21:
+                balance = balance + int(bet)
+                print(f"\nYou have {player_points} points... You've won your bet! Your balance is now ${balance}.")
+                break
+              else:
+                print(f"\nYou have {player_points} points... What is your next move? D to draw, S to stop!\n>>> ")
+                continue
+              continue
+main()    
