@@ -52,8 +52,9 @@ def paint_card(symbol, sym):
 
 def main():
   balance = 0
+  print(f"Welcome to the blackjack table!\nYour balance is ${balance}.")
   while True:
-    player_move = input("Welcome to the Blackjack table!\nWhat do you want to do?\nPress D to make a deposit, P to play, or Q to quit!\n>>> ")
+    player_move = input("What do you want to do?\nPress D to make a deposit, P to play, or Q to quit!\n>>> ")
     if player_move not in ("D", "P", "Q"):
       print("Please enter valid move.")
       continue
@@ -119,14 +120,30 @@ def main():
                 break
               elif player_points == 21:
                 balance = balance + int(bet)
-                print(f"\nYou have {player_points} points...\nYou've won your bet!\nYour balance is now ${balance}.")
-                break
+                print(f"\nYou have {player_points} points...\nThat's perfect!")
+                next_move = "S"
+                continue
               else:
-                print(f"\nYou have {player_points} points... What is your next move? D to draw, S to stop!\n>>> ")
+                print(f"\nYou have {player_points} points...")
                 continue
             elif next_move == "S":
               print(f"\nYou have {player_points} points... Now let's see what the dealer gets!")
-              break
+              while True:
+                dealer_hand[2] = draw_card(card_deck)
+                dealer_points += dealer_hand[2][2]
+                time.sleep(1)
+                print("Taking another card...")
+                time.sleep(1)
+                paint_card(dealer_hand[2][0], dealer_hand[2][1])
+                print(f"The dealer has {dealer_points} points!")
+                if dealer_points < 17:
+                    print("The dealer will take another card!")
+                    continue
+                elif 17 > dealer_points >= 21:
+                    print(f"The dealer will stop at {dealer_points} points!")
+                    break
+                elif dealer_points > 21:
+                    print(f"The dealer has {dealer_points} points. He loses!")
+                    break
+        break
 main()
-    
-    
