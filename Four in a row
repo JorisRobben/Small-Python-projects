@@ -23,4 +23,24 @@ def paint_board(board):
     print("|")
   print("+-------+")
 
-paint_board(make_empty_board(number_rows, number_cols))
+def player_move(player, column, board):
+  while True:
+    if column not in range(1,8):
+      print("That column does not exist.")
+      continue
+    else:
+      col = int(column) - 1
+    for row in board:
+      if row[col] == ".":
+        row[col] = player
+        break
+    return board
+
+def main():
+  board = make_empty_board(number_rows, number_cols)
+  paint_board(board)
+  next_move = int(input("\nIt's your turn!\nWhere do you want to place?"))
+  board = player_move("X", next_move, board)
+  paint_board(board)
+
+main()
