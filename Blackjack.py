@@ -43,12 +43,28 @@ def draw_card(card_deck):
     sym = "A"
   card_deck.remove(card)
   return (symbol, sym, value)
-    
-def paint_card(symbol, sym):
-    print(" ___ ")
-    print("|"+f"{sym}".ljust(3)+"|")
-    print(f"| {symbol} |")
-    print("|"+f"{sym}".rjust(3,"_")+"|")
+
+def paint_hand(hand):
+  for i in range(1, len(hand) + 1):
+    symbol = hand[i][0]
+    sym = hand[i][1]
+    print(" ___ ", end = "")
+  print()
+  for i in range(1, len(hand) + 1):
+    symbol = hand[i][0]
+    sym = hand[i][1]
+    print("|"+f"{sym}".ljust(3)+"|", end = "")
+  print()
+  for i in range(1, len(hand) + 1):
+    symbol = hand[i][0]
+    sym = hand[i][1]
+    print(f"| {symbol} |", end = "")
+  print()
+  for i in range(1, len(hand) + 1):
+    symbol = hand[i][0]
+    sym = hand[i][1]
+    print("|"+f"{sym}".rjust(3,"_")+"|", end = "")
+  print()
 
 def main():
   balance = 0
@@ -113,12 +129,10 @@ def main():
               player_points += player_hand[player_cards][2]
               #print and paint everything
               print("Dealer:")
-              paint_card(dealer_hand[1][0], dealer_hand[1][1])
+              paint_hand(dealer_hand)
               time.sleep(1)
               print("You:")
-              paint_card(player_hand[1][0], player_hand[1][1])
-              time.sleep(1)
-              paint_card(player_hand[2][0], player_hand[2][1])
+              paint_hand(player_hand)
               time.sleep(1)
               print(f"\nThe dealer has {dealer_points} points, and you have {player_points} points.")
               #next move for the player
@@ -136,7 +150,7 @@ def main():
                   player_cards +=1
                   player_hand[player_cards] = draw_card(card_deck)
                   player_points += player_hand[player_cards][2]
-                  paint_card(player_hand[player_cards][0], player_hand[player_cards][1])
+                  paint_hand(player_hand)
                   time.sleep(1)
                   if player_points > 21:
                     print(f"\nYou have {player_points} points...")  
@@ -162,7 +176,7 @@ def main():
                     dealer_hand[dealer_cards] = draw_card(card_deck)
                     dealer_points += dealer_hand[dealer_cards][2]
                     time.sleep(1)
-                    paint_card(dealer_hand[dealer_cards][0], dealer_hand[dealer_cards][1])
+                    paint_hand(dealer_hand)
                     time.sleep(1)
                     if dealer_points < 17:
                         continue
