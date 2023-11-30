@@ -1,0 +1,26 @@
+number_rows = 6
+#row 1 is the bottom row, row 6 is the top row
+number_cols = 7
+#col 1 is the leftmost column, col 7 is the rightmost column
+
+def make_empty_board(rows, cols):
+  board = []
+  #a board is a list that contains lists
+  #every list in the board list, represents a row
+  for i in range(0, rows):
+    board.append([])
+    for _ in range(0, cols):
+      board[i].append(".")
+  return board
+
+def paint_board(board):
+  print(r''' 1234567
++-------+''')
+  for row in board:
+    print("|", end = "")
+    for col in row:
+      print(col, end = "")
+    print("|")
+  print("+-------+")
+
+paint_board(make_empty_board(number_rows, number_cols))
