@@ -47,9 +47,14 @@ def main():
   while True:
     active_player = get_active_player(players, turn)
     print(f"This is turn #{turn}!")
-    next_move = int(input(f"It's player {active_player[0]}'s turn!\nIn which column do you want to place?\n>>> "))
-    board = player_move(active_player[0], next_move, board)
-    paint_board(board)
-    turn += 1
+    next_move = input(f"It's player {active_player[0]}'s turn!\nIn which column do you want to place?\n>>> ")
+    if not next_move.isnumeric() or int(next_move) not in range(1, number_cols+1):
+      print("Please enter a valid column!")
+      continue
+    else:
+      board = player_move(active_player[0], int(next_move), board)
+      paint_board(board)
+      turn += 1
+    continue
 
 main()
