@@ -2,7 +2,8 @@ number_rows = 6
 #row 1 is the bottom row, row 6 is the top row
 number_cols = 7
 #col 1 is the leftmost column, col 7 is the rightmost column
-
+players = ("X", "O")
+turn = 1
 def make_empty_board(rows, cols):
   board = []
   #a board is a list that contains a list for every row
@@ -16,6 +17,7 @@ def paint_board(board):
   print(r''' 1234567
 +-------+''')
   for i in reversed(range(0, len(board))):
+    #start painting the last row, because that's the one on top
     print("|", end = "")
     for j in range(0, len(board[i])):
       print(board[i][j], end = "")
@@ -26,15 +28,28 @@ def player_move(player, column, board):
     col = int(column) - 1
     for row in board:
       if row[col] == ".":
+        #we're looking for the first, or lowest, row that's empty
+        #so we start at the first row, and then work our way up
         row[col] = player
         break
     return board
 
+def get_active_player(players, turn):
+  if turn%2 != 0:
+    return(players[0])
+  else:
+    return(players[1])
+
 def main():
   board = make_empty_board(number_rows, number_cols)
   paint_board(board)
-  next_move = int(input("\nIt's your turn!\nWhere do you want to place?\n>>> "))
-  board = player_move("X", next_move, board)
-  paint_board(board)
+  global turn
+  while True:
+    active_player = get_active_player(players, turn)
+    print(f"This is turn #{turn}!")
+    next_move = int(input(f"It's player {active_player[0]}'s turn!\nIn which column do you want to place?\n>>> "))
+    board = player_move(active_player[0], next_move, board)
+    paint_board(board)
+    turn += 1
 
 main()
