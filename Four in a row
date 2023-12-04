@@ -40,6 +40,28 @@ def get_active_player(players, turn):
   else:
     return(players[1])
 
+def check_win(player, board):
+  #check horizontal
+  for row in board:
+    count = 0
+    for item in row:
+      if item == player:
+        count += 1
+        if count == 4:
+          return True
+      else:
+        count = 0
+  #check vertical
+  for col in range(0, number_cols):
+    count = 0
+    for row in range(0, number_rows):
+      if board[row][col] == player:
+        count +=1
+        if count == 4:
+          return True
+      else:
+        count = 0
+
 def main():
   board = make_empty_board(number_rows, number_cols)
   paint_board(board)
@@ -54,6 +76,9 @@ def main():
     else:
       board = player_move(active_player[0], int(next_move), board)
       paint_board(board)
+      if check_win(active_player[0], board):
+        print(f"Player {active_player[0]} wins!")
+        break
       turn += 1
     continue
 
