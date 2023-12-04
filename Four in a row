@@ -61,13 +61,23 @@ def check_win(player, board):
           return True
       else:
         count = 0
-  #check diagonal
+  #check diagonal to the right
   count = 0
   for row, col in zip(range(len(board)), range(len(board[0]))):
       if board[row][col] == player:
         count +=1
         if count == 4:
           return True
+      else:
+        count = 0
+
+  #check diagonal to the right
+  count = 0
+  for row, col in zip(range(len(board)), reversed(range(len(board[0])))):
+      if board[row][col] == player:
+         count +=1
+         if count == 4:
+           return True
       else:
         count = 0
 
