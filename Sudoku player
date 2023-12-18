@@ -1,5 +1,6 @@
 EMPTY_SPACE = "."
 GRID_LENGTH = 9
+BOX_LENGTH = 3
 FULL_GRID_SIZE = GRID_LENGTH*GRID_LENGTH
 COLUMNS = ["A","B","C","D","E","F","G","H","I"]
 
@@ -44,7 +45,7 @@ class sudoku_grid:
     return bool(column in COLUMNS and int(row) in range(1, GRID_LENGTH + 1) and int(number) in range(1, GRID_LENGTH + 1))
 
   def make_move(self, column, row, number):
-    if self.check_move(column, row, number) == True:
+    if self.check_move(column, row, number) is True:
       col = COLUMNS.index(column)+1
       row = int(row)
       if self.grid[(row, col)] == EMPTY_SPACE:
@@ -63,7 +64,7 @@ class sudoku_grid:
     for i in range(1, GRID_LENGTH + 1):
       for j in range(1, GRID_LENGTH + 1):
         row += self.grid[(i,j)]
-      if self.is_complete_set_of_numbers(row) == False:
+      if self.is_complete_set_of_numbers(row) is False:
         return False
       else:
         row = ""
@@ -72,11 +73,19 @@ class sudoku_grid:
     for i in range(1, GRID_LENGTH + 1):
       for j in range(1, GRID_LENGTH + 1):
         col += self.grid[(j,i)]
-      if self.is_complete_set_of_numbers(col) == False:
+      if self.is_complete_set_of_numbers(col) is False:
         return False
       else:
         col = ""
     #check if squares are complete
+    for box_x in (0,3,6):
+      for box_y in (0,3,6):
+        box_numbers = ""
+        for x in range (1, BOX_LENGTH + 1):
+          for y in range(1, BOX_LENGTH + 1):
+            box_numbers.append(self.grid[(x+box_x, y+box_y)])
+        if self.is_complete_set_of_numbers(box_numbers) is False:
+          return False
     return True
 
 def main():
