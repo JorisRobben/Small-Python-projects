@@ -90,6 +90,8 @@ class sudoku_grid:
           x += 1
         if self.is_complete_set_of_numbers(square):
           return True
+        else:
+          square = ""
     return False
 
 def main():
