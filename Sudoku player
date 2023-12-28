@@ -93,7 +93,7 @@ class sudoku_grid:
         else:
           sq = ""
     return True
-  
+
   def is_valid_move(self, row, col, num):
     # check if number is already in row
     rw = ""
